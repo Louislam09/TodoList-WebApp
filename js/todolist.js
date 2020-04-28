@@ -17,8 +17,6 @@ addBtn.addEventListener('click', addFunction);
 
 quitBtn.addEventListener('click', quitFunction);
 
-inputText.addEventListener('keydown', () => console.log(inputText.value));
-
 function setTodo() {
 	let randomNumber = Math.floor(Math.random() * 1000 * (Math.random() * 1000));
 

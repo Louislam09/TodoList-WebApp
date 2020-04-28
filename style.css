@@ -1,0 +1,218 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	background-color: rgb(7, 11, 32);
+	overflow-x: hidden;
+	user-select: none;
+}
+
+.header {
+	position: relative;
+	font-family: monospace;
+	min-width: 100vw;
+	height: 10vh;
+	background-color: #0b3c5d;
+	text-align: center;
+	color: white;
+	border: 2px solid #d9b310;
+	/* border-top: 2px solid #d9b310; */
+}
+.header h1 {
+	position: relative;
+	font-size: 4em;
+	font-style: oblique;
+	top: -30px;
+	color: #d9b310;
+}
+span {
+	color: rgba(217, 233, 236, 0.925);
+	margin-left: -34px;
+	outline: blue;
+	outline-width: thick;
+}
+
+.container {
+	position: relative;
+	font-family: monospace;
+	min-width: 100vw;
+	height: 100vh;
+	text-align: center;
+	background-color: rgba(45, 84, 110, 0.192);
+}
+
+.section-list {
+	margin-left: 15px;
+}
+.section-list h1 {
+	position: relative;
+	top: 15px;
+	color: #d9b310;
+}
+
+.list {
+	position: absolute;
+	transform: translate(-50%);
+	top: 20%;
+	left: 50%;
+	font-family: monospace;
+	font-size: x-large;
+	color: white;
+	min-width: fit-content;
+	padding-top: 15px;
+}
+
+.add-button {
+	position: relative;
+	top: 15px;
+	width: 80px;
+	height: 50px;
+	font-size: 30px;
+	border-radius: 15px;
+	cursor: pointer;
+}
+.add-button:hover {
+	background-color: green;
+}
+
+.section-new-todo {
+	position: absolute;
+	top: 100px;
+	left: 36%;
+	min-width: 200px;
+	min-height: 150px;
+	background-color: #1d27315e;
+	font-size: xxx-large;
+	color: white;
+	font-style: oblique;
+	padding: 15px;
+	border-radius: 5px;
+	border-top: 2px solid #d9b310;
+	border-bottom: 2px solid #d9b310;
+	visibility: hidden;
+}
+
+.section-new-todo input {
+	font-size: x-large;
+	font-style: oblique;
+	border-radius: 5px;
+	padding: 5px;
+	text-align: center;
+	border: 2px solid #d9b310;
+}
+.section-new-todo button {
+	font-size: x-large;
+	border-radius: 15px;
+	border: 2px solid #d9b310;
+	cursor: pointer;
+}
+.section-new-todo button:hover {
+	background-color: #d9b310;
+}
+
+.section-new-todo .quit {
+	position: absolute;
+	left: 84%;
+}
+.section-new-todo .quit:hover {
+	background-color: red;
+}
+
+.list .item {
+	/* width: fit-content; */
+	padding: 10px;
+	padding-top: 10px;
+	margin: 10px;
+	border: 1px solid #d9b310;
+	/* border-bottom: 3px solid white; */
+	border-radius: 15px;
+	list-style: none;
+	background-color: #0b3c5d;
+}
+li input,
+li input:disabled {
+	color: white;
+	text-align: center;
+	text-transform: capitalize;
+	font-size: .9em;
+	font-family: cursive;
+	font-weight: bolder;
+	background: transparent;
+	min-width: 400px;
+	border: none;
+	margin-left: 10px;
+}
+
+li .del-item {
+	color: red;
+	font-weight: 900;
+	border-radius: 5px;
+	border-color: transparent;
+	background: transparent;
+	cursor: pointer;
+	padding: 0px 5px;
+	font-size: .9em;
+	font-family: cursive;
+	border-color: rgb(183, 218, 204);
+}
+li .del-item:hover {
+	box-shadow: 1px 0px 14px 3px #d2a28f;
+	color: white;
+	/* box-shadow: inset 2px 1px 20px 20px #8fd2c9; */
+}
+
+li .edit-item {
+	font-size: .9em;
+	font-family: cursive;
+	color: lime;
+	font-weight: 999;
+	border-radius: 5px;
+	border-color: transparent;
+	background: transparent;
+	margin: 0 20px 0 20px;
+	cursor: pointer;
+	padding: 0px 5px;
+	border-color: rgb(183, 218, 204);
+}
+li .edit-item:hover {
+	box-shadow: 1px 0px 14px 3px #8fd2c9;
+	color: white;
+	/* box-shadow: inset 2px 1px 20px 20px #8fd2c9; */
+}
+
+li .done-item {
+	font-size: .9em;
+	font-family: cursive;
+	color: chartreuse;
+	font-weight: 900;
+	border-radius: 5px;
+	border-color: transparent;
+	background: transparent;
+	margin: 0 20px 0 20px;
+	display: none;
+	cursor: pointer;
+	padding: 0px 5px;
+	border-color: rgb(183, 218, 204);
+}
+li .done-item:hover {
+	box-shadow: 1px 0px 14px 3px #8fd2a5;
+	color: white;
+	/* box-shadow: inset 2px 1px 20px 20px #8fd2c9; */
+}
+
+li .box-item {
+	position: absolute;
+	content: "";
+	width: 28px;
+	height: 28px;
+	border-radius: 50px;
+	background: white;
+	border: 1px solid #e6e0c9;
+	cursor: pointer;
+	border-color: rgb(183, 218, 204);
+	border-width: 2px;
+}
+
+/* Prussia blue = #0B3C5D*/
+/* SKY BLUE  = #328CC1 */
+/* GOLD LEAF  = #D9B310 */
+/* IVORY BACK  = #1D2731 */

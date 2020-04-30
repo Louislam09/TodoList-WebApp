@@ -1,38 +1,33 @@
-let list = document.querySelector('.list');
-let addBtn = document.querySelector('.add-button');
-let addTodoSection = document.querySelector('.section-new-todo');
-let inputText = document.querySelector('.todo');
-let submitBtn = document.querySelector('.todo-button');
-let sectionList = document.querySelector('.section-list');
-let quitBtn = document.querySelector('.quit');
+const TODO_LIST = document.querySelector('.todo-list');
+const SHOW_NEW_TODO_SECTION = document.querySelector('.show-new-todo-section-button');
+const NEW_TODO_SECTION = document.querySelector('.section-new-todo');
+const INPUT_TEXT = document.querySelector('.todo-input-text');
+const ADD_NEW_TODO_BUTTON = document.querySelector('.todo-add-button');
+const TODO_LIST_CONTAINER = document.querySelector('.todo-list-container');
+const CLOSE_NEW_TODO_SECTION_BUTTON = document.querySelector('.section-new-todo-close-button');
 
-window.addEventListener('load', drawTodoStored);
-
-submitBtn.addEventListener('click', setTodo);
+window.addEventListener('load', LoadTodoStored);
 window.addEventListener('keydown', (e) => {
-	if (e.which === 13) setTodo();
+	if (e.which === 13) AddNewTodo();
 });
 
-addBtn.addEventListener('click', addFunction);
+ADD_NEW_TODO_BUTTON.addEventListener('click', AddNewTodo);
+SHOW_NEW_TODO_SECTION.addEventListener('click', swapOpenCloseNewSection);
+CLOSE_NEW_TODO_SECTION_BUTTON.addEventListener('click', swapOpenCloseNewSection);
 
-quitBtn.addEventListener('click', quitFunction);
-
-function setTodo() {
-	let randomNumber = Math.floor(Math.random() * 1000 * (Math.random() * 1000));
-
+function AddNewTodo() {
+	const RANDOM_KEY = Math.floor(Math.random() * 1000 * (Math.random() * 1000));
 	let doneState = false;
 
 	let data = {
-		inputText: inputText.value,
-		inputKey: randomNumber,
+		inputText: INPUT_TEXT.value,
+		inputKey: RANDOM_KEY,
 		doneState: doneState
 	};
 
-	saveNewTodo(data.inputText, data.inputKey, data.doneState);
-
 	let newTodo = document.createElement('li');
 	let input = document.createElement('input');
-	let del = document.createElement('button');
+	let remove = document.createElement('button');
 	let edit = document.createElement('button');
 	let done = document.createElement('button');
 	let box = document.createElement('div');
@@ -44,8 +39,8 @@ function setTodo() {
 	input.setAttribute('disabled', '');
 	input.value = data.inputText;
 
-	del.className = 'del-item';
-	del.innerText = 'REMOVE';
+	remove.className = 'del-item';
+	remove.innerText = 'REMOVE';
 
 	done.className = 'done-item';
 	done.innerText = 'DONE';
@@ -55,69 +50,60 @@ function setTodo() {
 	edit.className = 'edit-item';
 	edit.innerText = 'EDIT';
 
-	del.onclick = () => {
+	remove.addEventListener('click', () => {
 		newTodo.remove();
 		deleteValueFromSystem(data.inputKey);
-	};
+	});
 
-	edit.onclick = () => {
+	edit.addEventListener('click', () => {
 		input.removeAttribute('disabled');
 		input.setAttribute('autofocus', 'enable');
 		done.style.display = 'initial';
 		edit.style.display = 'none';
-		// deleteValueFromSystem(data.inputKey);
-	};
+	});
 
-	done.onclick = () => {
+	done.addEventListener('click', () => {
 		input.setAttribute('disabled', '');
 		done.style.display = 'none';
 		edit.style.display = 'initial';
-		addNewTodo(input.value, data.inputKey, doneState);
-	};
+		addNewTodoToSystem(input.value, data.inputKey, doneState);
+	});
 
-	box.onclick = () => {
+	box.addEventListener('click', () => {
 		if (data.doneState === false && box.style.background === 'white') {
 			box.style.background = 'wheat';
 			box.innerText = '✔️';
 			input.style.textDecoration = 'line-through red';
 			doneState = true;
-			addNewTodo(input.value, data.inputKey, doneState);
+			addNewTodoToSystem(input.value, data.inputKey, doneState);
 		} else {
 			box.innerText = '';
 			input.style.textDecoration = 'none';
 			box.style.background = 'white';
 			doneState = false;
-			addNewTodo(input.value, data.inputKey, doneState);
+			addNewTodoToSystem(input.value, data.inputKey, doneState);
 		}
-	};
+	});
 
 	newTodo.appendChild(box);
 	newTodo.appendChild(input);
 	newTodo.appendChild(edit);
 	newTodo.appendChild(done);
-	newTodo.appendChild(del);
+	newTodo.appendChild(remove);
 
-	if (!inputText.value <= 0) {
-		list.appendChild(newTodo);
+	if (!INPUT_TEXT.value <= 0) TODO_LIST.appendChild(newTodo);
+	if (!INPUT_TEXT.value <= 0) saveNewTodo(data.inputText, data.inputKey, data.doneState);
+
+	swapOpenCloseNewSection();
+}
+
+function swapOpenCloseNewSection() {
+	if (NEW_TODO_SECTION.style.visibility === 'hidden' && TODO_LIST_CONTAINER.style.visibility === 'visible') {
+		NEW_TODO_SECTION.style.visibility = 'visible';
+		TODO_LIST_CONTAINER.style.visibility = 'hidden';
+	} else {
+		NEW_TODO_SECTION.style.visibility = 'hidden';
+		TODO_LIST_CONTAINER.style.visibility = 'visible';
+		INPUT_TEXT.value = '';
 	}
-
-	//  Section visibility
-	addTodoSection.style.visibility = 'hidden';
-	sectionList.style.visibility = 'visible';
-
-	// Clear all input
-	inputText.value = '';
-}
-
-function quitFunction() {
-	addTodoSection.style.visibility = 'hidden';
-	sectionList.style.visibility = 'visible';
-
-	// Clear all input
-	inputText.value = '';
-}
-
-function addFunction() {
-	addTodoSection.style.visibility = 'visible';
-	sectionList.style.visibility = 'hidden';
 }

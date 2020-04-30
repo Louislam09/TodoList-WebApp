@@ -1,6 +1,6 @@
 let todoList = [];
 
-function addNewTodo(value, key, state) {
+function addNewTodoToSystem(value, key, state) {
 	let newTodo = {
 		key: key,
 		value: value,
@@ -15,17 +15,20 @@ function getTodoFromSystem() {
 	for (let i = 0; i < localStorage.length; i++) {
 		let values = [];
 		let key = localStorage.key(i);
-		values.push(localStorage.getItem(key));
 
-		if (values === null) {
-			values = [];
-		} else {
-			values = JSON.parse(values);
+		// This check that the data's key got from the localStorage have to be a number if not won not be loaded
+		if (parseInt(key) * 0 === 0) {
+			try {
+				values.push(localStorage.getItem(key));
 
-			if (typeof values.key === 'number') {
-				todoList.push(values);
-			} else {
-				console.log('this key is not allow');
+				if (values === null) {
+					values = [];
+				} else {
+					values = JSON.parse(values);
+					todoList.push(values);
+				}
+			} catch (e) {
+				console.warn('Some unsupported data was not loaded');
 			}
 		}
 	}
@@ -37,10 +40,9 @@ let localStorageTodoList = (key, value) => {
 };
 
 function saveNewTodo(value, key, state) {
-	addNewTodo(value, key, state);
+	addNewTodoToSystem(value, key, state);
 }
-
-function drawTodoStored() {
+function LoadTodoStored() {
 	let todoStored = getTodoFromSystem();
 	todoStored.forEach((index) => {
 		drawTodo(index.value, index.key, index.doneState);
@@ -55,8 +57,8 @@ function drawTodo(value, key, state) {
 	};
 
 	let newTodo = document.createElement('li');
-	let b1 = document.createElement('input');
-	let del = document.createElement('button');
+	let input = document.createElement('input');
+	let remove = document.createElement('button');
 	let edit = document.createElement('button');
 	let done = document.createElement('button');
 	let box = document.createElement('div');
@@ -64,13 +66,13 @@ function drawTodo(value, key, state) {
 	newTodo.className = 'item';
 	// newTodo.setAttribute('draggable', 'true');
 
-	b1.type = 'text';
-	b1.className = 'item-text';
-	b1.setAttribute('disabled', '');
-	b1.value = data.inputText;
+	input.type = 'text';
+	input.className = 'item-text';
+	input.setAttribute('disabled', '');
+	input.value = data.inputText;
 
-	del.className = 'del-item';
-	del.innerText = 'REMOVE';
+	remove.className = 'del-item';
+	remove.innerText = 'REMOVE';
 
 	edit.className = 'edit-item';
 	edit.innerText = 'EDIT';
@@ -80,62 +82,62 @@ function drawTodo(value, key, state) {
 	done.className = 'done-item';
 	done.innerText = 'DONE';
 
-	del.onclick = () => {
+	remove.addEventListener('click', () => {
 		deleteValueFromSystem(data.inputKey);
 		newTodo.remove();
-	};
+	});
 
-	edit.onclick = () => {
-		b1.removeAttribute('disabled');
-		b1.setAttribute('autofocus', 'enable');
+	edit.addEventListener('click', () => {
+		input.removeAttribute('disabled');
+		input.setAttribute('autofocus', 'enable');
 		done.style.display = 'initial';
 		edit.style.display = 'none';
-	};
+	});
 
-	done.onclick = () => {
-		b1.setAttribute('disabled', '');
+	done.addEventListener('click', () => {
+		input.setAttribute('disabled', '');
 		done.style.display = 'none';
 		edit.style.display = 'initial';
-		addNewTodo(b1.value, data.inputKey, data.doneState);
-	};
+		addNewTodoToSystem(input.value, data.inputKey, data.doneState);
+	});
 
-	box.onclick = () => {
+	box.addEventListener('click', () => {
 		if (data.doneState === false && box.style.background === 'white') {
 			box.style.background = 'wheat';
 			box.innerText = '✔️';
-			b1.style.textDecoration = 'line-through red';
+			input.style.textDecoration = 'line-through red';
 			doneState = true;
-			addNewTodo(b1.value, data.inputKey, doneState);
+			addNewTodoToSystem(input.value, data.inputKey, doneState);
 		} else {
 			box.innerText = '';
-			b1.style.textDecoration = 'none';
+			input.style.textDecoration = 'none';
 			box.style.background = 'white';
 			doneState = false;
-			addNewTodo(b1.value, data.inputKey, doneState);
+			addNewTodoToSystem(input.value, data.inputKey, doneState);
 		}
-	};
+	});
 
 	// this check if the todo is done when is loaded
 	if (data.doneState) {
 		box.style.background = 'wheat';
 		box.innerText = '✔️';
-		b1.style.textDecoration = 'line-through red';
+		input.style.textDecoration = 'line-through red';
 	}
 
 	newTodo.appendChild(box);
-	newTodo.appendChild(b1);
+	newTodo.appendChild(input);
 	newTodo.appendChild(edit);
 	newTodo.appendChild(done);
-	newTodo.appendChild(del);
+	newTodo.appendChild(remove);
 
 	// this check that the element have a value
 	if (!value <= 0) {
-		list.appendChild(newTodo);
+		TODO_LIST.appendChild(newTodo);
 	}
 
 	//  Section visibility
-	addTodoSection.style.visibility = 'hidden';
-	sectionList.style.visibility = 'visible';
+	NEW_TODO_SECTION.style.visibility = 'hidden';
+	TODO_LIST_CONTAINER.style.visibility = 'visible';
 
 	// Clear all input
 	el = '';

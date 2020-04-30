@@ -40,16 +40,16 @@ span {
 	background-color: rgba(45, 84, 110, 0.192);
 }
 
-.section-list {
+.todo-list-container {
 	margin-left: 15px;
 }
-.section-list h1 {
+.todo-list-container h1 {
 	position: relative;
 	top: 15px;
 	color: #d9b310;
 }
 
-.list {
+.todo-list {
 	position: absolute;
 	transform: translate(-50%);
 	top: 20%;
@@ -61,7 +61,7 @@ span {
 	padding-top: 15px;
 }
 
-.add-button {
+.show-new-todo-section-button {
 	position: relative;
 	top: 15px;
 	width: 80px;
@@ -70,7 +70,7 @@ span {
 	border-radius: 15px;
 	cursor: pointer;
 }
-.add-button:hover {
+.show-new-todo-section-button:hover {
 	background-color: green;
 }
 
@@ -109,15 +109,15 @@ span {
 	background-color: #d9b310;
 }
 
-.section-new-todo .quit {
+.section-new-todo .section-new-todo-close-button {
 	position: absolute;
 	left: 84%;
 }
-.section-new-todo .quit:hover {
+.section-new-todo .section-new-todo-close-button:hover {
 	background-color: red;
 }
 
-.list .item {
+.todo-list .item {
 	/* width: fit-content; */
 	padding: 10px;
 	padding-top: 10px;
